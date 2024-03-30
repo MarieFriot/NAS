@@ -106,7 +106,7 @@ def interfaceConfig(name, conf, commande,tn):
     tn : telnetlib.Telnet
     Returns
     -------
-    Configure chaques interface du routeur.
+    Configure chaques interface des routeurs.
     """
     compteurRd = name*10 
         
@@ -208,6 +208,17 @@ def interfaceConfig(name, conf, commande,tn):
 
                     
 def labelProtocolConfig(name, conf, commande,tn):
+    """
+    Parameters
+    ----------
+    name : Chaine de caractère : nom du routeur 
+    conf : Dictionnaire contenant la configuration de chaques routeur du réseau.
+    commande : Dictionnaire contenant les commandes de configuration d'un routeur cisco.
+    tn : telnetlib.Telnet
+    Returns
+    -------
+    Configure ldp sur lles interfaces des PE et des P qui sont dans le coeur du réseau.
+    """
 
     with open(f"lastConfig/lastConfig{name}.json","r") as f:
         lastConfig = json.load(f)
@@ -278,7 +289,7 @@ def bgpConfig (name, conf, commande,tn) :
     tn : telnetlib.Telnet
     Returns
     -------
-    Configure bgp sur le routeur.
+    Configure bgp sur les routeurs (pour du trafic vpnv4).
     """
     
    
@@ -287,7 +298,7 @@ def bgpConfig (name, conf, commande,tn) :
         
     AS = conf['as']
     routerType = conf['routerType']
-    neighbors = conf['neighbors']
+    
     
     
     indice = 0
@@ -363,6 +374,17 @@ def bgpConfig (name, conf, commande,tn) :
         json.dump(lastConfig, f)
     
 def ipv4BgpConfig(name, conf, commande,tn) :
+    """
+    Parameters
+    ----------
+    name : Chaine de caractère : nom du routeur 
+    conf : Dictionnaire contenant la configuration de chaques routeur du réseau.
+    commande : Dictionnaire contenant les commandes de configuration d'un routeur cisco.
+    tn : telnetlib.Telnet
+    Returns
+    -------
+    Configure bgp sur les routeurs pour du trafic ipv4.
+    """
     with open(f"lastConfig/lastConfig{name}.json","r") as f:
         lastConfig = json.load(f)
         

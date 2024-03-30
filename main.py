@@ -41,7 +41,7 @@ def configRouteur(routeur,data,cible):
     ----------
     routeur : String : Numéro du routeur.
     data : Dictionnaire : Contient les paramètres de configuration de chaques routeurs
-    cible : String : Indique quel élement on configure (internalRouting, bgp, interface, all)
+    cible : String : Indique quel élement on configure (interface, bgp, interface, bgpipv4, all)
     -------
     Fonction permettant de configurer un routeur via telnet.
     """
@@ -70,28 +70,28 @@ def configRouteur(routeur,data,cible):
             tn.write(b"end\r")
             tn.read_until(b"#")
             
-            if cible == "internalRouting" :
-                ### Configuration du protocol de routage interne ####
-                libgns3.internalRoutingProtocol(name,conf,commande,tn)
-                time.sleep(1)
+           
                 
-            elif cible =="interface":
+            if cible =="interface":
                 #### Configuratioon des interfaces ###
                 libgns3.interfaceConfig(name, conf, commande,tn)
                 time.sleep(1)
                 
-            elif cible == "bgp":
-                ### Configuration de bgp ###
-                if conf['border'] == "True" :
-                    libgns3.bgpConfig (name, conf, commande,tn)
-                    time.sleep(1)
-                    libgns3.setCommunity(name, conf, commande, tn)
-                    time.sleep(1)
-                    libgns3.filterCommunity(name, conf, commande, tn)
-          
-          
+            elif cible == "ldp" :
+                time.sleep(1)
+                libgns3.labelProtocolConfig(name, conf, commande,tn)
+                time.sleep(1)
+                
+            elif cible == "bgp" :
+                libgns3.bgpConfig (name, conf, commande,tn)
+                time.sleep(1)
+            
+            elif cible == "bgipv4":
+                libgns3.ipv4BgpConfig(name, conf, commande,tn)
+                time.sleep(1)
+                
+                
             else :
-                #libgns3.internalRoutingProtocol(name,conf,commande,tn)
                 time.sleep(1)
                 libgns3.interfaceConfig(name, conf, commande,tn)
                 time.sleep(1)
@@ -103,86 +103,14 @@ def configRouteur(routeur,data,cible):
                 
                 
                 
-                #if conf['border'] == "True" :
-                    #libgns3.setCommunity(name, conf, commande, tn)
-                    #time.sleep(1)
-                    #libgns3.filterCommunity(name, conf, commande, tn)
-                    #time.sleep(1)
+              
                     
     except ConnectionRefusedError:
         print(f"La connexion à R{name} a été refusée.")
     except Exception as e:
         print(f"Erreur de connexion a R{name}: {e}")
     
-def resetRouteur(routeur,data,cible):
-    """
-    Parameters
-    ----------
-    routeur : String : Numéro du routeur.
-    data : Dictionnaire : Contient les paramètres de configuration de chaques routeurs
-    cible : String : Indique quel élement on réinitialise (internalRouting, bgp, interface, all)
-    -------
-    Fonction permettant d'effacer la configuration d'un routeur via telnet.
-    """
-    conf = data[routeur] # dictioanaire contenant la configuration du routeur 
-    name = int(routeur)
-    nameRouteur ="R"
-    nameRouteur += str(name)
-    
-    #Récupération du nom et du numéro de port du routeur
-    projectID = data["1"]["projectId"]
-    projectName =  data["1"]["projectName"]
-    nom, port = portRouteur(nameRouteur,projectName, projectID)
-    
-    #Lecture des commandes de configuration 
-    with open("commande.json", 'r') as fcommande :
-        commande = json.load(fcommande)
-    
-    try:
-        with telnetlib.Telnet(nom, port , timeout=30) as tn: #nom et numero de port
-            print(f"connexion établie avec R{name} ")
-            tn.read_until(b"#")
-            
-            if cible == "internalRouting" :
-                ### Suppression du protocol de routage interne ####
-                libgns3.noInternalRoutingProtocol(name,conf,commande,tn)
-                time.sleep(1)
-                
-            elif cible =="interface":
-                #### Suppression de la configuration sur les interfaces (adrresse ip notamment) ###
-                libgns3.noInterfaceConfig(name, conf, commande,tn)
-                time.sleep(1)
-                
-            elif cible == "bgp":
-                if conf['border'] == "True" :
-                ### Suppression du protocol bgp ###
-                    libgns3.noBgpConfig (name, conf, commande,tn)
-                    time.sleep(1)
-                    libgns3.resetCommunity(name, conf, commande, tn)
-                    time.sleep(1)
-                    libgns3.resetFilterCommunity(name, conf, commande, tn)
-                    time.sleep(1)
-               
-            else :
-                #libgns3.noInternalRoutingProtocol(name,conf,commande,tn)
-                time.sleep(1)
-                libgns3.noInterfaceConfig(name, conf, commande,tn)
-                time.sleep(1)
-                libgns3.noLabelProtocolConfig(name, conf, commande,tn)
-                time.sleep(1)
-                
-                if conf['border'] == "True" :
-                    #libgns3.noBgpConfig (name, conf, commande,tn)
-                    time.sleep(1)
-                    #libgns3.resetCommunity(name, conf, commande, tn)
-                    time.sleep(1)
-                    #libgns3.resetFilterCommunity(name, conf, commande, tn)
-                    time.sleep(1)
-                
-    except ConnectionRefusedError:
-        print(f"La connexion à R{name} a été refusée.")
-    except Exception as e:
-        print(f"Erreur de connexion a R{name}: {e}")
+
         
         
         
@@ -206,20 +134,15 @@ def main():
     while routeur not in data.keys() and routeur !="all" :
         routeur = input("Quel est le numéro du routeur que vous voulez configurer. Si vous voulez tout configurer : all ?")
 
-    action = input("Reset ou config?\n")
+   
     cible =input("Quelle est votre cible : internalRouting, interface, bgp, all\n")
-    if action == "config" :
-        if routeur == "all" :
+   
+    if routeur == "all" :
             for routeur in data.keys() :
                 configRouteur(routeur,data,cible)
-        else : 
+    else : 
             configRouteur(routeur,data,cible)
-    else :
-        if routeur == "all" :
-            for routeur in data.keys() :
-                resetRouteur(routeur,data,cible)
-        else : 
-            resetRouteur(routeur,data,cible)
+   
      
 if __name__ == "__main__" :
     answer = input("Voulez vous effacer les fichiers contenant la dernière config [oui/non] ?")

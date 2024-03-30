@@ -1,10 +1,4 @@
-{ "internalRouting" : {
-	"resetOspf" : [{"configure terminal\r": 1}, {"ipv6 unicast-routing\r": 2}, {"no ipv6 router ospf 1\r": 0}],
-	"ospf" : [{"configure terminal\r": 1}, {"ipv6 unicast-routing\r": 2}, {"ipv6 router ospf 1\r": 0},  {"router-id {name}.{name}.{name}.{name}\r": 0} ],
-	"ospfbordure" : [{"configure terminal\r": 1}, {"ipv6 unicast-routing\r": 2}, {"ipv6 router ospf 1\r": 0},
-	{"router-id {name}.{name}.{name}.{name}\r": 0},{"passive-interface FastEthernet0/0\r": 0}]},
-
-
+{ 
 "interface" : {
 	"loopback" :[ {"configure terminal\r": 1}, {"interface loopback0\r": 1}],
 	"0" : [{"configure terminal\r": 1}, {"interface fastEthernet0/0\r": 1}],
@@ -30,8 +24,7 @@
 
 "labelProtocol" : {
 	"ldp" : [ {"configure terminal\r": 1}, {"mpls ip\r": 0}, {"mpls label protocol ldp\r": 0}],
-	"ldpInterface" : [ {"mpls ip\r": 0}],
-	"noldp" : [ {"configure terminal\r": 1}, {"no mpls ip\r": 0}, {"no mpls label protocol \r": 0}]
+	"ldpInterface" : [ {"mpls ip\r": 0}]
 },
 
 "bgp" : {
