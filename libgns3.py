@@ -207,7 +207,7 @@ def interfaceConfig(name, conf, commande,tn):
 
 
                     
-def labelProtocolConfig(name, conf, commande,tn):
+def mplsConfig(name, conf, commande,tn):
     """
     Parameters
     ----------

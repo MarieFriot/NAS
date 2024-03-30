@@ -41,7 +41,7 @@ def configRouteur(routeur,data,cible):
     ----------
     routeur : String : Numéro du routeur.
     data : Dictionnaire : Contient les paramètres de configuration de chaques routeurs
-    cible : String : Indique quel élement on configure (interface, bgp, interface, bgpipv4, all)
+    cible : String : Indique quel élement on configure (interface, bgp, mpls, bgpipv4, all)
     -------
     Fonction permettant de configurer un routeur via telnet.
     """
@@ -77,9 +77,9 @@ def configRouteur(routeur,data,cible):
                 libgns3.interfaceConfig(name, conf, commande,tn)
                 time.sleep(1)
                 
-            elif cible == "ldp" :
+            elif cible == "mpls" :
                 time.sleep(1)
-                libgns3.labelProtocolConfig(name, conf, commande,tn)
+                libgns3.mplsConfig(name, conf, commande,tn)
                 time.sleep(1)
                 
             elif cible == "bgp" :
@@ -95,7 +95,7 @@ def configRouteur(routeur,data,cible):
                 time.sleep(1)
                 libgns3.interfaceConfig(name, conf, commande,tn)
                 time.sleep(1)
-                libgns3.labelProtocolConfig(name, conf, commande,tn)
+                libgns3.mplsConfig(name, conf, commande,tn)
                 time.sleep(1)
                 libgns3.bgpConfig (name, conf, commande,tn)
                 time.sleep(1)
