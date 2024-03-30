@@ -1,0 +1,98 @@
+{ "internalRouting" : {
+	"resetOspf" : [{"configure terminal\r": 1}, {"ipv6 unicast-routing\r": 2}, {"no ipv6 router ospf 1\r": 0}],
+	"ospf" : [{"configure terminal\r": 1}, {"ipv6 unicast-routing\r": 2}, {"ipv6 router ospf 1\r": 0},  {"router-id {name}.{name}.{name}.{name}\r": 0} ],
+	"ospfbordure" : [{"configure terminal\r": 1}, {"ipv6 unicast-routing\r": 2}, {"ipv6 router ospf 1\r": 0},
+	{"router-id {name}.{name}.{name}.{name}\r": 0},{"passive-interface FastEthernet0/0\r": 0}]},
+
+
+"interface" : {
+	"loopback" :[ {"configure terminal\r": 1}, {"interface loopback0\r": 1}],
+	"0" : [{"configure terminal\r": 1}, {"interface fastEthernet0/0\r": 1}],
+	"1" : [{"configure terminal\r": 1}, {"interface gigabitEthernet1/0\r": 1}],
+	"2" :[{"configure terminal\r": 1}, {"interface gigabitEthernet2/0\r": 1}],
+	"3" :[{"configure terminal\r": 1}, {"interface gigabitEthernet3/0\r": 1}],
+	"4" :[{"configure terminal\r": 1}, {"interface gigabitEthernet4/0\r": 1}],
+
+	"ospf" : [ {"ip address 192.{AS}.{ip_val}.{name} {masque}\r": 0}, {"no shutdown\r": 2}, 
+	{"ip ospf 1 area 0\r": 0}],
+
+	"vrf" : [ {"ip vrf forwarding client{numClient}\r": 0},{"ip address 192.{AS}.{ip_val}.{name} {masque}\r": 0}, {"no shutdown\r": 2}, 
+	{"ip ospf 1 area 0\r": 0}],
+
+	"noIGP" : [ {"ip address 192.{AS}.{ip_val}.{name} {masque}\r": 0}, {"no shutdown\r": 2}],
+
+	"passive" : [ {"ip address 192.{AS}.{ip_val}.{name} {masque}\r": 0}, {"no shutdown\r": 2}, 
+	{"ip ospf 1 area 0\r": 0},{"exit\r": 1}, {"router ospf 1\r": 1}, {"passive-interface gigabitEthernet{interface}/0\r": 1}  ]
+
+},
+
+
+
+"labelProtocol" : {
+	"ldp" : [ {"configure terminal\r": 1}, {"mpls ip\r": 0}, {"mpls label protocol ldp\r": 0}],
+	"ldpInterface" : [ {"mpls ip\r": 0}],
+	"noldp" : [ {"configure terminal\r": 1}, {"no mpls ip\r": 0}, {"no mpls label protocol \r": 0}]
+},
+
+"bgp" : {
+	"config" : [{"configure terminal\r": 1}, {"router bgp {AS}\r": 0}, 
+	{"bgp router-id {name}.{name}.{name}.{name}\r": 0}],
+	
+	"internalSession" : [{"neighbor 192.{AS}.{ip_val}.{namePe} remote-as {AS}\r": 0}, 
+	{"neighbor  192.{AS}.{ip_val}.{namePe} update-source loopback0\r": 0}, {"address-family vpnv4\r": 1}, 
+	{"neighbor 192.{AS}.{ip_val}.{namePe} activate\r": 0}, {"exit\r": 1}],
+
+	"internalSessionIP" : [{"neighbor 192.{AS}.{ip_val}.{nameR} remote-as {AS}\r": 0}, 
+	{"neighbor  192.{AS}.{ip_val}.{nameR} update-source loopback0\r": 0}, {"address-family ipv4\r": 1}, 
+	{"neighbor 192.{AS}.{ip_val}.{nameR} activate\r": 0}, {"exit\r": 1}],
+
+
+	"externalSessionCE" : [{"neighbor 192.{AS}.{ip_val}.{name} remote-as {ASNeighbor}\r": 0}, {"address-family ipv4\r": 1}, 
+	{"neighbor 192.{AS}.{ip_val}.{name} activate\r": 0}, {"neighbor 192.{AS}.{ip_val}.{name} allowas-in\r": 0}, {"exit\r": 1}],
+
+	"advertiseCE" : [ {"address-family ipv4\r": 1}, {"network 192.{AS}.{subnet}.0 mask 255.255.255.252\r": 0}, {"exit\r": 1}],
+
+	"externalSessionPE" : [ {"address-family ipv4 vrf client{numClient}\r": 1}, {"neighbor 192.{ASNeighbor}.{ip_val}.{name} remote-as {ASNeighbor}\r": 0},
+	{"neighbor 192.{ASNeighbor}.{ip_val}.{name} activate\r": 0}, {"exit\r": 1}],
+
+	"externalSessionIP" : [{"neighbor 192.{AS}.{ip_val}.{name} remote-as {ASNeighbor}\r": 0}, {"address-family ipv4\r": 1}, 
+	{"neighbor 192.{AS}.{ip_val}.{name} activate\r": 0}, {"exit\r": 1}]
+
+},
+
+"vrf" :{ "config" : [{"configure terminal\r": 1},{"ip vrf  client{numClient}\r": 0},{"rd {AS}:{compteur}\r": 0},
+			{"route-target export {asClient}:{numClient}\r": 0},{"route-target import {asClient}:{numClient}\r": 0}],
+		"importRT" : [{"route-target import {asClient}:{numClient}\r": 0}]}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

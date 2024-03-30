@@ -1,0 +1,153 @@
+{
+
+   
+    "1":{
+        "as" : 111,
+        "neighbors" :{"loopback" :[1,111], "0" : ["NULL",0],"1": [2,111],"2":[6,210,1], "3" :[8,211,2],"4": [14,214,"passive"]},
+        "PErouter" : [4,10,12],
+        "CErouter" : [[6,210,1],[8,211,2]],
+        "import" : [[2,3,212],[1,3,212]],
+        "ASrouter" : [2,3,4,10,12],
+        "eBGPRouter" : [[14,214]],
+        "routerType" : "PE",
+        "routing_protocol" :"ospf",  
+        "projectId"  : "2635b71b-3c0b-43dd-87ec-aff86afd9be3",
+        "projectName" : "MPLS-VPN-AUTO"  
+          
+    },
+    
+    
+    "2":{
+        "as" : 111,
+        "neighbors" :{"loopback" :[2,111],"1" : [1,111], "2": [3,111] , "3": ["NULL",0], "4": ["NULL",0] },
+        "routerType" : "P",
+        "ASrouter" : [1,3,4,10,12],
+        "routing_protocol" :"ospf"
+    },
+
+    "3":{
+        "as" : 111,
+        "neighbors" :{"loopback" :[3,111],"1" : [4,111], "2": [2,111] , "3": [10,111], "4": [12,111] },
+        "routerType" : "P",
+        "ASrouter" : [1,2,4,10,12],
+        "routing_protocol" :"ospf"
+
+    },
+
+    "4":{
+        "as" : 111,
+        "neighbors" :{"loopback" :[4,111], "0" : ["NULL",0],"1": [3,111],"2":[5,210, 1], "3" :[7,211,2],"4": [13,213,"passive"]},
+        "PErouter" : [1,10,12],
+        "CErouter" : [[5,210,1],[7,211,2]],
+        "routerType" : "PE",
+        "routing_protocol" :"ospf",
+        "import" : [[2,3,212],[1,3,212]],
+        "ASrouter" : [1,2,3,10,12],
+        "eBGPRouter" : [[13,213]]
+          
+    },
+    "5":{
+
+        "as" : 210,
+        "neighbors" :{"loopback" :["NULL",0], "0" : ["NULL",0],"1": [4,210],"2":[0,210], "3" :["NULL",0],"4": ["NULL",0]},
+        "routerType" : "CE",
+        "PErouter" : [[4,111]],
+        "advertise" :  [45,5]
+          
+    },
+    
+    "6":{
+        "as" : 210,
+        "neighbors" :{"loopback" :["NULL",0], "0" : ["NULL",0],"1": [1,210],"2":[0,210], "3" :["NULL",0],"4": ["NULL",0]},
+        "routerType" : "CE",
+        "PErouter" : [[1,111]],
+        "advertise" :  [16,6]
+       
+          
+    },
+    "7":{
+
+        "as" : 211,
+        "neighbors" :{"loopback" :["NULL",0], "0" : ["NULL",0],"1": [4,211],"2":[0,211], "3" :["NULL",0],"4": ["NULL",0]},
+        "routerType" : "CE",
+        "PErouter" : [[4,111]],
+        "advertise" :  [47,7]
+      
+          
+    },
+    
+    "8":{
+        "as" : 211,
+        "neighbors" :{"loopback" :["NULL",0], "0" : ["NULL",0],"1": [1,211],"2":[0,211], "3" :["NULL",0],"4": ["NULL",0]},
+        "routerType" : "CE",
+        "PErouter" : [[1,111]],
+        "advertise" :  [18,8]
+       
+          
+    },
+    "9":{
+        "as" : 212,
+        "neighbors" :{"loopback" :["NULL",0], "0" : ["NULL",0],"1": [10,212],"2":[0,212], "3" :["NULL",0],"4": ["NULL",0]},
+        "routerType" : "CE",
+        "PErouter" : [[10,111]],
+        "advertise" :  [100,9]
+        
+          
+    },
+
+    "10":{
+        "as" : 111,
+        "neighbors" :{"loopback" :[10,111], "0" : ["NULL",0],"1": [3,111],"2":[9,212, 3], "3" :["NULL",0],"4": ["NULL",0]},
+        "PErouter" : [1,4,12],
+        "CErouter" : [[9,212,3]],
+        "routerType" : "PE",
+        "routing_protocol" :"ospf",
+        "import" : [[3,1,210],[3,2,211]],
+        "ASrouter" : [1,2,3,4,12],
+        "eBGPRouter" : []
+          
+    },
+
+    "11":{
+        "as" : 212,
+        "neighbors" :{"loopback" :["NULL",0], "0" : ["NULL",0],"1": [12,212],"2":[0,212], "3" :["NULL",0],"4": ["NULL",0]},
+        "routerType" : "CE",
+        "PErouter" : [[12,111]],
+        "advertise" :  [122,11]
+          
+    },
+
+    "12":{
+        "as" : 111,
+        "neighbors" :{"loopback" :[12,111], "0" : ["NULL",0],"1": [3,111],"2":[11,212, 3], "3" :["NULL",0],"4": ["NULL",0]},
+        "PErouter" : [1,4,10],
+        "CErouter" : [[11,212,3]],
+        "routerType" : "PE",
+        "routing_protocol" :"ospf",
+        "import" : [[3,1,210],[3,2,211]],
+        "ASrouter" : [1,2,3,10,12],
+        "eBGPRouter" : []
+          
+    },
+    
+    "13":{
+        "as" : 213,
+        "neighbors" :{"loopback" :["NULL",0], "0" : ["NULL",0],"1": [4,213],"2":[0,213], "3" :["NULL",0],"4": ["NULL",0]},
+        "routerType" : "CEIP",
+        "ASrouter" : [],
+        "advertise" :  [53,3],
+        "eBGPRouter" : [[4,111]]
+          
+    },
+
+    "14":{
+        "as" : 214,
+        "neighbors" :{"loopback" :["NULL",0], "0" : ["NULL",0],"1": [1,214],"2":[0,214], "3" :["NULL",0],"4": ["NULL",0]},
+        "routerType" : "CEIP",
+        "ASrouter" : [],
+        "advertise" :  [24,14],
+        "eBGPRouter" : [[1,111]]
+          
+    }
+    
+}
