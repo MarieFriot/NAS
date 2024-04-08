@@ -19,4 +19,4 @@ Dans l'AS principale sont configurés Ospf, mpls et bgp vpn4  ainsi que des vrfs
 
 Le client vpn 3 peut communiquer avec les routeurs de son réseau mais aussi avec les clients 1 et 2. Les clients 1 et 2 peuvent communiquer avec les routeurs de leur réseau et donc aussi avec le client 3. En revanche, les clients 1 et 2 sont isolés même si leurs adresses ip se chevauchent car leurs routes sont distinguées pas un route target au niveau de leur vrf.
 
-Les routeurs 13 et 14 peuvent communiquer entre eux via du trafic ipv4. Mais ils ne peuvent pas communiquer avec les autres clients qui sont isolés.
+Les routeurs 13 et 14 peuvent communiquer entre eux via du trafic ipv4. Mais ils ne peuvent pas communiquer avec les clients vpn qui sont isolés.
